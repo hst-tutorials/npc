@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: npc_grafana
+    networks:
+    - npc
+    ports:
+    - 3000:3000
+
+  influxdb:
+    image: influxdb:latest
+    container_name: npc_influxdb
+    networks:
+    - npc
+    ports:
+    - 8086:8086
+    volumes:
+    - influxdb:/var/lib/influxdb
+    - influxdb_config:/etc/influxdb2
+
+networks:
+  npc:
+
+volumes:
+  influxdb:
+  influxdb_config:
