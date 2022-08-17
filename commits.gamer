@@ -1,0 +1,5 @@
+----- app.py, threadHelper ----
+refractored logic for determening which thread is started to threadHelper
+
+----- speedtestFetcher -----
+renamed second speedtest.main for better clarity
