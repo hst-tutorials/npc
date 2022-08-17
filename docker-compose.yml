@@ -8,6 +8,8 @@ services:
     - npc
     ports:
     - 3000:3000
+    volumes:
+    - grafana:/var/lib/grafana
 
   influxdb:
     image: influxdb:latest
@@ -17,12 +19,21 @@ services:
     ports:
     - 8086:8086
     volumes:
-    - influxdb:/var/lib/influxdb
+    - influxdb:/var/lib/influxdb2
     - influxdb_config:/etc/influxdb2
+
+  app:
+    image: quay.group.asap.de/1319/npc
+    container_name: npc_app
+    networks:
+    - npc
+    volumes:
+    - ./app/config/config.ini:/app/config/config.ini
 
 networks:
   npc:
 
 volumes:
+  grafana:
   influxdb:
   influxdb_config:
