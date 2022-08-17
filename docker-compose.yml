@@ -23,7 +23,7 @@ services:
     - influxdb_config:/etc/influxdb2
 
   app:
-    image: quay.group.asap.de/1319/npc
+    image: npc:latest
     container_name: npc_app
     networks:
     - npc

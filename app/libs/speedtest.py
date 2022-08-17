@@ -1,11 +1,13 @@
 import re
 import subprocess
 import json
-from libs.ping import pingHost
+from . import ping as pingHost
+
 
 def speedtestOokla():
-
-    response = subprocess.Popen('/usr/bin/speedtest --accept-license --accept-gdpr', shell=True, stdout=subprocess.PIPE).stdout.read().decode('utf-8')
+    response = subprocess.Popen(
+        '/usr/bin/speedtest --accept-license --accept-gdpr', shell=True, stdout=subprocess.PIPE)
+    response = response.stdout.read().decode('utf-8')
 
     ping = re.search('Latency:\s+(.*?)\s', response, re.MULTILINE)
     download = re.search('Download:\s+(.*?)\s', response, re.MULTILINE)
@@ -25,20 +27,21 @@ def speedtestOokla():
 
     return result
 
+
 def speedtestIperf3(hostname, port):
-    
-    ping=pingHost(hostname,1)
-    
-    speedtest = subprocess.Popen(f"iperf3 -c {hostname} -p {port} -J", shell=True, stdout=subprocess.PIPE).stdout.read().decode('utf-8')
-    
-    
-    result=json.loads(speedtest)
-    
+
+    ping = pingHost.pingHost(hostname, 1)
+
+    speedtest = subprocess.Popen(
+        f"iperf3 -c {hostname} -p {port} -J", shell=True, stdout=subprocess.PIPE)
+    speedtest = speedtest.stdout.read().decode('utf-8')
+
+    result = json.loads(speedtest)
+
     result = {
         "ping": ping['rtt_avg'],
         "download": result['end']['sum_received']['bits_per_second'],
         "upload": result['end']['sum_sent']['bits_per_second'],
     }
-    
+
     return result
-    

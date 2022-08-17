@@ -1,4 +1,4 @@
-FROM --platform=arm64 python:slim-bullseye
+FROM python:slim-bullseye
 
 #Install prereqs
 RUN apt-get update && apt-get install -y python3-pip iperf3 curl iputils-ping

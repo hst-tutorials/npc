@@ -1,1 +1,3 @@
 venv/
+config/config.ini
+docker-compose.yml
