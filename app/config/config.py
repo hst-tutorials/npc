@@ -33,7 +33,7 @@ class Config:
             "module": speedtest.iPerf3
         },
         "fastCom": {
-            "name": "fastCom",
+            "name": "fast.com",
             "enabled": False,
             "bucket": "fast.com",
             "interval": 60,

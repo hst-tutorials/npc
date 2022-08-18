@@ -31,7 +31,7 @@ def prepResults(measurement, hostname, data):
     return data
 
 
-def pingHost(hostname, count, pingOnly):
+def pingHost(hostname, count):
     pingParser = pingparsing.PingParsing()
     transmitter = pingparsing.PingTransmitter()
     transmitter.destination = hostname
@@ -42,7 +42,7 @@ def pingHost(hostname, count, pingOnly):
     return json.loads(json.dumps(pingParser.parse(results).as_dict(), indent=4))
 
 
-def latency(config, interval, hostnames, count, pingOnly):
+def latency(config, interval, hostnames, count):
 
     for hostname in hostnames:
 
@@ -51,7 +51,7 @@ def latency(config, interval, hostnames, count, pingOnly):
         log.writeLog(
             f"Latency check starting for host {hostname}", "INFO", "stdout")
 
-        results = pingHost(hostname, count, False)
+        results = pingHost(hostname, count)
 
         log.writeLog(
             f"Latency check finished for host {hostname}", "INFO", "stdout")

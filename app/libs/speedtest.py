@@ -51,12 +51,15 @@ def fastCom(config, interval, hostname, port):
 
     speedtestType = "fast.com"
 
-    ping = pingHost.pingHost(hostname, 1, True)
+    ping = pingHost.pingHost(hostname, 1)
 
     speedtest = fastcli.run()
 
     results = prepResults(speedtestType, hostname,
                           ping['rtt_avg'], speedtest, 0)
+    
+    log.writeLog(
+        f"Speedtest with type {speedtestType} finished", "INFO", "stdout")
 
     influx.writeToInflux(config, results, config['fastCom']['bucket'])
 
@@ -67,7 +70,7 @@ def iPerf3(config, interval, hostname, port):
 
     speedtestType = "iPerf3"
 
-    ping = pingHost.pingHost(hostname, 1, True)
+    ping = pingHost.pingHost(hostname, 1)
 
     speedtest = iperf3.Client()
     speedtest.server_hostname = hostname
@@ -79,6 +82,9 @@ def iPerf3(config, interval, hostname, port):
 
     results = prepResults(speedtestType, hostname,
                           ping['rtt_avg'], speedtest.received_Mbps, speedtest.sent_Mbps)
+    
+    log.writeLog(
+        f"Speedtest with type {speedtestType} finished", "INFO", "stdout")
 
     influx.writeToInflux(config, results, config['iperf3']['bucket'])
 
