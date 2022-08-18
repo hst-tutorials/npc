@@ -28,7 +28,7 @@ services:
     networks:
     - npc
     volumes:
-    - ./app/config/config.py:/app/config/config.py
+    - ./app/config/config.json:/app/config/config.json
 
 networks:
   npc:

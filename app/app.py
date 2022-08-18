@@ -1,5 +1,5 @@
 #import utils.getConfig as conf
-import config.config as conf
+import utils.config as conf
 import utils.logging as log
 import utils.threadHelper as threadHelper
 import time
@@ -9,8 +9,9 @@ import time
 config = conf.Config()
 config = config.parseConfig()
 
+
 def main():
-    
+
     threadHandler = threadHelper.ThreadHelper()
 
     if not threadHandler.initFeatureThreads(config=config):

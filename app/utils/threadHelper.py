@@ -1,10 +1,10 @@
 import threading
 
 #from . import getConfig as conf
-from config import config as conf
+from utils import config as conf
 from . import logging as log
 
-from libs import speedtest
+from libs import bandwidth
 from libs import ping
 
 config = conf.Config()

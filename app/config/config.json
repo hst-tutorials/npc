@@ -1,0 +1,47 @@
+{
+    "influxdb": {
+        "name": "influxdb",
+        "enabled": false,
+        "host": "http:/localhost:8086",
+        "token": "",
+        "org": ""
+    },
+    "ookla": {
+        "name": "ookla",
+        "enabled": false,
+        "bucket": "speedtest.net",
+        "interval": 60,
+        "args": ["config", "interval", "name", ""],
+        "module": "libs.bandwidth.ookla"
+    },
+    "iperf3": {
+        "name": "iperf3",
+        "enabled": false,
+        "bucket": "iperf3",
+        "hostname": "",
+        "port": "",
+        "interval": 60,
+        "args": ["config", "interval", "hostname", "port"],
+        "module": "libs.bandwidth.iPerf3"
+    },
+    "fastCom": {
+        "name": "fast.com",
+        "enabled": false,
+        "bucket": "",
+        "interval": 60,
+        "args": ["config", "interval", "name", ""],
+        "module": "libs.bandwidth.fastCom"
+    },
+    "latency": {
+        "name": "latency",
+        "enabled": true,
+        "hostnames": [
+            "google.com", "fast.com"
+        ],
+        "count": 4,
+        "interval": 0,
+        "bucket": "latency",
+        "args": ["config", "interval", "hostnames", "count"],
+        "module": "libs.ping.latency"
+    }
+}

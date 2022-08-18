@@ -26,7 +26,7 @@ def prepResults(measurement, hostname, ping, download, upload):
     return result
 
 
-def ookla(config, interval, hostname, port):
+def ookla(interval, hostname, port, config):
 
     speedtestType = "speedtest.net"
 
@@ -47,7 +47,7 @@ def ookla(config, interval, hostname, port):
     time.sleep(interval)
 
 
-def fastCom(config, interval, hostname, port):
+def fastCom(interval, hostname, port, config):
 
     speedtestType = "fast.com"
 
@@ -57,7 +57,7 @@ def fastCom(config, interval, hostname, port):
 
     results = prepResults(speedtestType, hostname,
                           ping['rtt_avg'], speedtest, 0)
-    
+
     log.writeLog(
         f"Speedtest with type {speedtestType} finished", "INFO", "stdout")
 
@@ -66,7 +66,7 @@ def fastCom(config, interval, hostname, port):
     time.sleep(interval)
 
 
-def iPerf3(config, interval, hostname, port):
+def iPerf3(interval, hostname, port, config):
 
     speedtestType = "iPerf3"
 
@@ -82,7 +82,7 @@ def iPerf3(config, interval, hostname, port):
 
     results = prepResults(speedtestType, hostname,
                           ping['rtt_avg'], speedtest.received_Mbps, speedtest.sent_Mbps)
-    
+
     log.writeLog(
         f"Speedtest with type {speedtestType} finished", "INFO", "stdout")
 
