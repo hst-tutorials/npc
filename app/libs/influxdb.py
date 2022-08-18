@@ -8,7 +8,7 @@ def writeToInflux(config, data, bucket):
     influxToken = config['influxdb']['token']
     influxOrg = config['influxdb']['org']
     
-    if config['influxdb']['enabled'] == "True":
+    if config['influxdb']['enabled'] == True:
             log.writeLog("Writing data to influxdb", "INFO", "stdout")
             with InfluxDBClient(url=influxHost, token=influxToken, org=influxOrg) as client:
                 write_api = client.write_api(write_options=SYNCHRONOUS)
