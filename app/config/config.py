@@ -3,6 +3,7 @@ from libs import speedtest
 from libs import ping
 import json
 
+
 class Config:
 
     CONFIG = {
@@ -17,7 +18,8 @@ class Config:
             "name": "ookla",
             "enabled": False,
             "bucket": "speedtest.net",
-            "args": ["config", "name", ""],
+            "interval": 60,
+            "args": ["config",  "interval", "name", ""],
             "module": speedtest.ookla
         },
         "iperf3": {
@@ -26,14 +28,16 @@ class Config:
             "bucket": "iperf3",
             "hostname": "",
             "port": "",
-            "args": ["config", "hostname", "port"],
+            "interval": 60,
+            "args": ["config",  "interval", "hostname", "port"],
             "module": speedtest.iPerf3
         },
         "fastCom": {
             "name": "fastCom",
             "enabled": False,
             "bucket": "fast.com",
-            "args": ["config","name",""],
+            "interval": 60,
+            "args": ["config", "interval", "name", ""],
             "module": speedtest.fastCom
         },
         "latency": {
@@ -43,16 +47,17 @@ class Config:
                 "google.com", "fast.com"
             ],
             "count": 4,
+            "interval": 0,
             "bucket": "latency",
-            "args": ["config", "hostnames", "count"],
+            "args": ["config", "interval", "hostnames", "count"],
             "module": ping.latency
         }
     }
-    
+
     def parseConfig(self):
-        
+
         config: dict = dict()
-        
+
         for section in self.CONFIG:
             config.update({section: {}})
             args = []
@@ -67,7 +72,6 @@ class Config:
                             args.append("")
                     config[section].update({key: args})
                 else:
-                    config[section].update({key: val})     
-        
+                    config[section].update({key: val})
+
         return config
-                

@@ -10,10 +10,11 @@ from libs import ping
 config = conf.Config()
 config = config.parseConfig()
 
+
 class ThreadHelper:
 
     THREADS = config
-    
+
     def startThread(self, key) -> None:
         if self.THREADS[key]['thread'] is not None:
             self.THREADS[key]['thread'] = self.getFeatureThread(
@@ -22,7 +23,7 @@ class ThreadHelper:
 
     def getFeatureThread(self, featureKey: str, name: str, args) -> threading.Thread:
         thread = threading.Thread(target=self.THREADS[featureKey]['module'],
-                                  name=name, args=(args[0], args[1], args[2]))
+                                  name=name, args=(args[0], args[1], args[2], args[3]))
 
         if thread is None:
             raise Exception("No Thread with given config was found")

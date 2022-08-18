@@ -2,9 +2,11 @@ import pingparsing
 import json
 from . import influxdb as influx
 from utils import logging as log
+import time
 
-def prepResults(measurement,hostname, data):
-    
+
+def prepResults(measurement, hostname, data):
+
     data = [
         {
             "measurement": measurement,
@@ -24,31 +26,37 @@ def prepResults(measurement,hostname, data):
             }
         }
 
-        ]
-    
+    ]
+
     return data
 
-def pingHost(hostname,count,pingOnly):
+
+def pingHost(hostname, count, pingOnly):
     pingParser = pingparsing.PingParsing()
     transmitter = pingparsing.PingTransmitter()
     transmitter.destination = hostname
     transmitter.count = count
     results = transmitter.ping()
-    
-    #write results into readable json   
-    return json.loads(json.dumps(pingParser.parse(results).as_dict(), indent=4)) 
 
-def latency(config, hostnames, count, pingOnly):
-    
+    # write results into readable json
+    return json.loads(json.dumps(pingParser.parse(results).as_dict(), indent=4))
+
+
+def latency(config, interval, hostnames, count, pingOnly):
+
     for hostname in hostnames:
-        
-        measurement="iperf3"
-        
+
+        measurement = "iperf3"
+
         log.writeLog(
             f"Latency check starting for host {hostname}", "INFO", "stdout")
-        
-        results = pingHost(hostname,count,False)
 
-        log.writeLog(f"Latency check finished for host {hostname}", "INFO", "stdout")
+        results = pingHost(hostname, count, False)
 
-        influx.writeToInflux(config,prepResults(measurement,hostname,results),config['latency']['bucket'])
+        log.writeLog(
+            f"Latency check finished for host {hostname}", "INFO", "stdout")
+
+        influx.writeToInflux(config, prepResults(
+            measurement, hostname, results), config['latency']['bucket'])
+
+        time.sleep(interval)
