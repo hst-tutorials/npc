@@ -6,9 +6,10 @@ RUN curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/scr
 
 #Copy data into image
 
-COPY app/ /app
+COPY app/requirements.txt /app/requirements.txt
 
 RUN python3 -m pip install -r /app/requirements.txt
 
+COPY app/ /app
 
 CMD [ "python3", "-u", "/app/app.py" ]
