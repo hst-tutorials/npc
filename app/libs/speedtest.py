@@ -2,30 +2,42 @@ import re
 import subprocess
 import json
 from . import ping as pingHost
+from . import fastcli
 
+def prepResults(ping, download,upload):
+    
+    result = {
+        "ping": ping,
+        "download": download,
+        "upload": upload,
+    }
+    
+    return result
 
 def speedtestOokla():
-    response = subprocess.Popen(
+    speedtest = subprocess.Popen(
         '/usr/bin/speedtest --accept-license --accept-gdpr', shell=True, stdout=subprocess.PIPE)
-    response = response.stdout.read().decode('utf-8')
+    speedtest = speedtest.stdout.read().decode('utf-8')
 
-    ping = re.search('Latency:\s+(.*?)\s', response, re.MULTILINE)
-    download = re.search('Download:\s+(.*?)\s', response, re.MULTILINE)
-    upload = re.search('Upload:\s+(.*?)\s', response, re.MULTILINE)
-    jitter = re.search('Latency:.*?jitter:\s+(.*?)ms', response, re.MULTILINE)
+    ping = re.search('Latency:\s+(.*?)\s', speedtest, re.MULTILINE)
+    download = re.search('Download:\s+(.*?)\s', speedtest, re.MULTILINE)
+    upload = re.search('Upload:\s+(.*?)\s', speedtest, re.MULTILINE)
+    jitter = re.search('Latency:.*?jitter:\s+(.*?)ms', speedtest, re.MULTILINE)
 
     ping = ping.group(1)
     download = download.group(1)
     upload = upload.group(1)
     jitter = jitter.group(1)
 
-    result = {
-        "ping": ping,
-        "download": download,
-        "upload": upload,
-    }
+    return prepResults(ping,download,upload,)
 
-    return result
+def speedtestFastCom(hostname):
+    
+    ping = pingHost.pingHost(hostname, 1)
+    
+    speedtest = fastcli.run()
+    
+    return prepResults(ping['rtt_avg'],speedtest,0)
 
 
 def speedtestIperf3(hostname, port):
@@ -38,10 +50,6 @@ def speedtestIperf3(hostname, port):
 
     result = json.loads(speedtest)
 
-    result = {
-        "ping": ping['rtt_avg'],
-        "download": result['end']['sum_received']['bits_per_second'],
-        "upload": result['end']['sum_sent']['bits_per_second'],
-    }
+    return prepResults(ping['rtt_avg'],result['end']['sum_received']['bits_per_second']\
+        ,result['end']['sum_sent']['bits_per_second'])
 
-    return result

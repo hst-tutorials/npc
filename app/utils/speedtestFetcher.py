@@ -20,6 +20,11 @@ def main(speedtestType, hostname=None, port=None):
     elif speedtestType == "iperf3":
         data = speedtest.speedtestIperf3(hostname, port)
         bucketName = config['settings']['iPerf3Bucket']
+        
+    elif speedtestType == "fast.com":
+        hostname = "fast.com"
+        data = speedtest.speedtestFastCom(hostname)
+        #bucketName = config['settings']['iPerf3Bucket']
 
     else:
         log.writeLog(f"Please enter correct speedtest type", "ERROR", "stdout")

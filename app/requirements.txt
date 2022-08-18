@@ -1,2 +1,3 @@
 pingparsing
 influxdb-client
+fastcli

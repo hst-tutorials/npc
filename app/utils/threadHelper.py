@@ -24,6 +24,12 @@ class ThreadHelper:
             'thread': None,
             'module': speedtestFetcher
         },
+        'fastcomspeedtest': {
+            'name': "fastComSpeedtest",
+            'args': ["fast.com", "", ""],
+            'thread': None,
+            'module': speedtestFetcher
+        },
         'latencycheck': {
             'name': "latencyCheck",
             'args': ["latencyCheck", config['settings']['latencycheckhostnames'], config['settings']['latencycheckcount']],
@@ -32,7 +38,7 @@ class ThreadHelper:
         }
     }
 
-    def startThread(self, key):
+    def startThread(self, key) -> None:
         if self.THREADS[key]['thread'] is not None:
             self.THREADS[key]['thread'] = self.getFeatureThread(
                 key, self.THREADS[key]['name'], self.THREADS[key]['args'])
