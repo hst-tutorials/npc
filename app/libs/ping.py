@@ -28,26 +28,27 @@ def prepResults(measurement,hostname, data):
     
     return data
 
-def pingHost(config, hostnames, count):
+def pingHost(hostname,count,pingOnly):
+    pingParser = pingparsing.PingParsing()
+    transmitter = pingparsing.PingTransmitter()
+    transmitter.destination = hostname
+    transmitter.count = count
+    results = transmitter.ping()
     
-    for hostname in json.loads(hostnames):
+    #write results into readable json   
+    return json.loads(json.dumps(pingParser.parse(results).as_dict(), indent=4)) 
+
+def latency(config, hostnames, count, pingOnly):
+    
+    for hostname in hostnames:
         
         measurement="iperf3"
         
         log.writeLog(
             f"Latency check starting for host {hostname}", "INFO", "stdout")
         
-        #setup ping parsing lib
-        pingParser = pingparsing.PingParsing()
-        transmitter = pingparsing.PingTransmitter()
-        transmitter.destination = hostname
-        transmitter.count = count
-        results = transmitter.ping()
+        results = pingHost(hostname,count,False)
 
         log.writeLog(f"Latency check finished for host {hostname}", "INFO", "stdout")
 
-        #write results into readable json
-        results = json.loads(json.dumps(pingParser.parse(results).as_dict(), indent=4))
-        
-        
-        influx.writeToInflux(config,prepResults(measurement,hostname,results),config['settings']['latencycheckbucket'])
+        influx.writeToInflux(config,prepResults(measurement,hostname,results),config['latency']['bucket'])

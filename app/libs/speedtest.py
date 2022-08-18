@@ -40,26 +40,26 @@ def ookla(config,hostname, port):
     results = prepResults(speedtestType, hostname, speedtest.results.ping,\
         speedtest.results.download,speedtest.results.upload)
     
-    influx.writeToInflux(config,results,config['settings']['ooklabucket'])
+    influx.writeToInflux(config,results,config['ookla']['bucket'])
 
 def fastCom(config, hostname, port):
     
     speedtestType = "fast.com"
     
-    ping = pingHost.pingHost(hostname, 1)
+    ping = pingHost.pingHost(hostname, 1, True)
     
     speedtest = fastcli.run()
     
     results = prepResults(speedtestType, hostname, ping['rtt_avg'], speedtest, 0)
     
-    influx.writeToInflux(config,results,config['settings']['fastcombucket'])
+    influx.writeToInflux(config,results,config['fastCom']['bucket'])
 
 
 def iPerf3(config, hostname, port):
     
     speedtestType = "iPerf3"
     
-    ping = pingHost.pingHost(hostname, 1)
+    ping = pingHost.pingHost(hostname, 1, True)
     
     speedtest = iperf3.Client()
     speedtest.server_hostname = hostname
@@ -72,7 +72,7 @@ def iPerf3(config, hostname, port):
     results = prepResults(speedtestType, hostname, ping['rtt_avg'],speedtest.received_Mbps\
         ,speedtest.sent_Mbps)
     
-    influx.writeToInflux(config,results,config['settings']['iperf3bucket'])
+    influx.writeToInflux(config,results,config['iperf3']['bucket'])
     
     
 
