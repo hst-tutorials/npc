@@ -1,8 +1,11 @@
 import re
 import subprocess
 import json
+import iperf3
+import speedtest as speedtestCli
 from . import ping as pingHost
 from . import fastcli
+
 
 def prepResults(ping, download,upload):
     
@@ -15,21 +18,15 @@ def prepResults(ping, download,upload):
     return result
 
 def speedtestOokla():
-    speedtest = subprocess.Popen(
-        '/usr/bin/speedtest --accept-license --accept-gdpr', shell=True, stdout=subprocess.PIPE)
-    speedtest = speedtest.stdout.read().decode('utf-8')
+    
+    speedtest = speedtestCli.Speedtest()
+    speedtest.get_best_server()
+    
+    
+    speedtest.download(threads=4)
+    speedtest.upload(threads=4)
 
-    ping = re.search('Latency:\s+(.*?)\s', speedtest, re.MULTILINE)
-    download = re.search('Download:\s+(.*?)\s', speedtest, re.MULTILINE)
-    upload = re.search('Upload:\s+(.*?)\s', speedtest, re.MULTILINE)
-    jitter = re.search('Latency:.*?jitter:\s+(.*?)ms', speedtest, re.MULTILINE)
-
-    ping = ping.group(1)
-    download = download.group(1)
-    upload = upload.group(1)
-    jitter = jitter.group(1)
-
-    return prepResults(ping,download,upload,)
+    return prepResults(speedtest.results.ping,speedtest.results.download,speedtest.results.upload)
 
 def speedtestFastCom(hostname):
     
@@ -41,15 +38,17 @@ def speedtestFastCom(hostname):
 
 
 def speedtestIperf3(hostname, port):
-
+    
     ping = pingHost.pingHost(hostname, 1)
+    
+    speedtest = iperf3.Client()
+    speedtest.server_hostname = hostname
+    speedtest.port = port
+    speedtest.zerocopy = True
+    speedtest.duration = 10
+    
+    speedtest = speedtest.run()    
 
-    speedtest = subprocess.Popen(
-        f"iperf3 -c {hostname} -p {port} -J", shell=True, stdout=subprocess.PIPE)
-    speedtest = speedtest.stdout.read().decode('utf-8')
-
-    result = json.loads(speedtest)
-
-    return prepResults(ping['rtt_avg'],result['end']['sum_received']['bits_per_second']\
-        ,result['end']['sum_sent']['bits_per_second'])
+    return prepResults(ping['rtt_avg'],speedtest.received_Mbps\
+        ,speedtest.sent_Mbps)
 

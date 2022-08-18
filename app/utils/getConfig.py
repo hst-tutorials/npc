@@ -23,6 +23,4 @@ def getConfig(configType):
                 configDict[section].update(
                     {key: config.get(section, key, fallback=getCorrectFallback(section))})
 
-        print(configDict)
-
         return config
