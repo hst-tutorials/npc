@@ -22,10 +22,10 @@ class Config:
         },
         "iperf3": {
             "name": "iperf3",
-            "enabled": True,
+            "enabled": False,
             "bucket": "iperf3",
-            "hostname": "speedtest.group.asap.de",
-            "port": "5202",
+            "hostname": "",
+            "port": "",
             "args": ["config", "hostname", "port"],
             "module": speedtest.iPerf3
         },
