@@ -48,7 +48,7 @@ def latency(config, interval, hostnames, count):
     # loop through hostnames as multiple hosts can be checked
     for hostname in hostnames:
 
-        measurement = "iperf3"
+        measurement = "latency"
 
         log.writeLog(
             f"Latency check starting for host {hostname}", "INFO", "stdout")

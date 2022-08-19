@@ -9,9 +9,10 @@
     "ookla": {
         "name": "ookla",
         "enabled": false,
+        "hostname": "speedtest.net",
         "bucket": "speedtest.net",
         "interval": 60,
-        "args": ["config", "interval", "name", ""],
+        "args": ["config", "interval", "hostname", ""],
         "module": "libs.bandwidth.ookla"
     },
     "iperf3": {
@@ -28,8 +29,9 @@
         "name": "fast.com",
         "enabled": false,
         "bucket": "",
+        "hostname": "fast.com",
         "interval": 60,
-        "args": ["config", "interval", "name", ""],
+        "args": ["config", "interval", "hostname", ""],
         "module": "libs.bandwidth.fastCom"
     },
     "latency": {

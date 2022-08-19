@@ -26,7 +26,7 @@ def prepResults(measurement, hostname, ping, download, upload):
     return result
 
 # function to use speedtest-cli module to run a ookla speedtest
-def ookla(interval, hostname, port, config):
+def ookla(config, interval, hostname, port):
 
     speedtestType = "speedtest.net"
 
@@ -48,7 +48,7 @@ def ookla(interval, hostname, port, config):
     time.sleep(interval)
 
 #function to use fastcli module to run a fast.com speedtest
-def fastCom(interval, hostname, port, config):
+def fastCom(config, interval, hostname, port):
 
     speedtestType = "fast.com"
 
@@ -68,7 +68,7 @@ def fastCom(interval, hostname, port, config):
     time.sleep(interval)
 
 # function to use iperf3 module to run a iperf3 speedtest
-def iPerf3(interval, hostname, port, config):
+def iPerf3(config, interval, hostname, port):
 
     speedtestType = "iPerf3"
 
