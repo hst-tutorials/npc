@@ -23,7 +23,7 @@ services:
     - influxdb_config:/etc/influxdb2
 
   app:
-    image: npc:latest
+    image: hsttutorials/npc:latest
     container_name: npc_app
     networks:
     - npc
