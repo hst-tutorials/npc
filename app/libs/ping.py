@@ -4,7 +4,7 @@ from . import influxdb as influx
 from utils import logging as log
 import time
 
-
+# function to parse the given data into influx readable format (json)
 def prepResults(measurement, hostname, data):
 
     data = [
@@ -30,7 +30,8 @@ def prepResults(measurement, hostname, data):
 
     return data
 
-
+# helper function to ping host and return the results (used in iperf3 and 
+# fast.com speedtests as well as latency check)
 def pingHost(hostname, count):
     pingParser = pingparsing.PingParsing()
     transmitter = pingparsing.PingTransmitter()
@@ -44,6 +45,7 @@ def pingHost(hostname, count):
 
 def latency(config, interval, hostnames, count):
 
+    # loop through hostnames as multiple hosts can be checked
     for hostname in hostnames:
 
         measurement = "iperf3"
@@ -59,4 +61,5 @@ def latency(config, interval, hostnames, count):
         influx.writeToInflux(config, prepResults(
             measurement, hostname, results), config['latency']['bucket'])
 
+        # sleep for given interval (set in config.json)
         time.sleep(interval)

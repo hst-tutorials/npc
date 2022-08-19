@@ -5,10 +5,13 @@ from utils import logging as log
 
 def writeToInflux(config, data, bucket):
 
+    # use variables for better readablity
     influxHost = config['influxdb']['host']
     influxToken = config['influxdb']['token']
     influxOrg = config['influxdb']['org']
 
+    # if the influxdb feature is enabled, connect to database and write given data into
+    # given bucket
     if config['influxdb']['enabled'] == True:
         log.writeLog("Writing data to influxdb", "INFO", "stdout")
         with InfluxDBClient(url=influxHost, token=influxToken, org=influxOrg) as client:

@@ -7,6 +7,7 @@ from . import logging as log
 from libs import bandwidth
 from libs import ping
 
+#Import config from helper class
 config = conf.Config()
 config = config.parseConfig()
 
@@ -15,6 +16,7 @@ class ThreadHelper:
 
     THREADS = config
 
+    #helper function to start thread, if it does not exist, create it and save it into the THREADS variable
     def startThread(self, key) -> None:
         if self.THREADS[key]['thread'] is not None:
             self.THREADS[key]['thread'] = self.getFeatureThread(
@@ -30,9 +32,11 @@ class ThreadHelper:
 
         return thread
 
+    #function to init threads when the application is starting
     def initFeatureThreads(self, config) -> bool:
         featureEnabled = False
 
+        #check if module is enabled, then create the thread, start it and save it into the THREADS variable
         for key in config:
             if config[key]['enabled'] and 'module' in config[key]:
                 try:
@@ -47,5 +51,6 @@ class ThreadHelper:
 
         return featureEnabled
 
+    #check if thread is alive and return its status
     def isThreadAlive(self, key) -> bool:
         return self.THREADS[key]['thread'] is not None and self.THREADS[key]['thread'].is_alive()

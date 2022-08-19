@@ -6,7 +6,7 @@ from . import influxdb as influx
 from utils import logging as log
 import time
 
-
+# function to parse the given data into influx readable format (json)
 def prepResults(measurement, hostname, ping, download, upload):
 
     result = [
@@ -25,7 +25,7 @@ def prepResults(measurement, hostname, ping, download, upload):
 
     return result
 
-
+# function to use speedtest-cli module to run a ookla speedtest
 def ookla(interval, hostname, port, config):
 
     speedtestType = "speedtest.net"
@@ -44,9 +44,10 @@ def ookla(interval, hostname, port, config):
 
     influx.writeToInflux(config, results, config['ookla']['bucket'])
 
+    # sleep for given interval (set in config.json)
     time.sleep(interval)
 
-
+#function to use fastcli module to run a fast.com speedtest
 def fastCom(interval, hostname, port, config):
 
     speedtestType = "fast.com"
@@ -63,9 +64,10 @@ def fastCom(interval, hostname, port, config):
 
     influx.writeToInflux(config, results, config['fastCom']['bucket'])
 
+    # sleep for given interval (set in config.json)
     time.sleep(interval)
 
-
+# function to use iperf3 module to run a iperf3 speedtest
 def iPerf3(interval, hostname, port, config):
 
     speedtestType = "iPerf3"
@@ -88,4 +90,16 @@ def iPerf3(interval, hostname, port, config):
 
     influx.writeToInflux(config, results, config['iperf3']['bucket'])
 
+    # sleep for given interval (set in config.json)
     time.sleep(interval)
+
+
+# to expand this list, create a function with the following arguments
+# interval, hostname, port, config
+# the function needs to return the following values parsed via prepResults()
+# speedtestType: e.g. speedtest.net, fast.com, iPerf3
+# hostname: e.g. speedtest.net, fast.com
+# ping
+# download
+# upload
+# data can be passed to influx with the influx.writeToInflux() function
