@@ -2,7 +2,7 @@
     "influxdb": {
         "name": "influxdb",
         "enabled": false,
-        "host": "http://npc_app:8086",
+        "host": "http://npc_influxdb:8086",
         "token": "",
         "org": ""
     },
@@ -10,7 +10,7 @@
         "name": "ookla",
         "enabled": false,
         "hostname": "speedtest.net",
-        "bucket": "speedtest.net",
+        "bucket": "",
         "interval": 60,
         "args": ["config", "interval", "hostname", ""],
         "module": "libs.bandwidth.ookla"

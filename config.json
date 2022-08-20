@@ -2,7 +2,7 @@
     "influxdb": {
         "name": "influxdb",
         "enabled": false,
-        "host": "http:/localhost:8086",
+        "host": "http://npc_influxdb:8086",
         "token": "",
         "org": ""
     },
