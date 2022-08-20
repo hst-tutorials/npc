@@ -191,3 +191,9 @@ Select influxdb and enter the information as shown below:
 ![grafanaDatasource3](https://i.imgur.com/tMpzgrE.png)
 
 After that you can save the source and start exploring. For some examples, I included my dashboard (examples/grafana.json) in the repository. You can import it using **Dashboards** > **Import** 
+
+## Used libraries:
+I've used some libs to implement the different features:
+- https://github.com/sivel/speedtest-cli
+- https://github.com/n8henrie/fastcli
+- https://github.com/thiezn/iperf3-python
