@@ -58,12 +58,12 @@ I created this small tool to quickly record my network performance and also have
         - config.json:/app/config/config.json
 
     networks:
-    npc:
+      npc:
 
     volumes:
-    grafana:
-    influxdb:
-    influxdb_config:
+      grafana:
+      influxdb:
+      influxdb_config:
     ```
 
     I really recommend using a reverse proxy like traefik or nginx in front of the two applications if you want to use the tool in a production environment.
