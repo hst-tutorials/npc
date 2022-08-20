@@ -1,6 +1,9 @@
 # npc - network performance checker
 I created this small tool to quickly record my network performance and also have a long term display of all the collected data. The tool itself collects the data and is able to save it into an influxdb. The data then can be read and visualized by tools like grafana. For easier deployment, I created a docker image so you can pull the repository, execute the docker-compose file and get started. The script is designed to run on small devices like a raspberry pi but can also be run on any docker-host.
 
+## Image on dockerhub:
+https://hub.docker.com/r/hsttutorials/npc
+
 ## Features:
 - monitor network latency to multiple host
 - fetch results from 3 different speedtest services (speedtest.net, fast.com and iPerf3)
